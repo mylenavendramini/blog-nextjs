@@ -1,9 +1,14 @@
-.heading2Xl {
+.heading2Xl,
+.title {
   font-size: 2.5rem;
   line-height: 1.2;
   font-weight: 800;
   letter-spacing: -0.05rem;
   margin: 1rem 0;
+}
+
+.title:hover {
+  opacity: 0.8;
 }
 
 .headingXl {
@@ -49,4 +54,14 @@
 
 .lightText {
   color: #666;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.grid section:last-child {
+  text-align: right;
 }
