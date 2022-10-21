@@ -6,13 +6,10 @@ import Link from "next/link";
 
 import Date from "../components/date";
 import { getSortedPostsData } from "../lib/posts";
-import { getSortedEmployeesData } from "../lib/employees";
-// import { getSortedInfoData } from "../lib/info";
 
 export default function Home({
   allPostsData,
   allEmployeesData,
-  allInfoData,
 }: {
   allPostsData: {
     date: string;
@@ -20,14 +17,7 @@ export default function Home({
     id: string;
   }[];
   allEmployeesData: {
-    date: string;
-    title: string;
-    id: string;
-  }[];
-  allInfoData: {
     name: string;
-    email: string;
-    phone: string;
     id: number;
   }[];
 }) {
@@ -56,13 +46,10 @@ export default function Home({
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Employees</h2>
         <ul className={utilStyles.list}>
-          {allEmployeesData.map(({ id, date, title }) => (
+          {allEmployeesData.map(({ id, name }) => (
             <li className={utilStyles.listItem} key={id}>
-              <Link href={`/employees/${id}`}>{title}</Link>
+              <Link href={`/employees/${id}`}>{name}</Link>
               <br />
-              <small className={utilStyles.lightText}>
-                <Date dateString={date} />
-              </small>
             </li>
           ))}
         </ul>
@@ -72,14 +59,14 @@ export default function Home({
 }
 export const getStaticProps: GetStaticProps = async () => {
   const allPostsData = getSortedPostsData();
-  const allEmployeesData = getSortedEmployeesData();
-  // const allInfoData = getSortedInfoData();
+
+  const resUsers = await fetch(`https://jsonplaceholder.typicode.com/users`);
+  const allEmployeesData = await resUsers.json();
 
   return {
     props: {
       allPostsData,
       allEmployeesData,
-      // allInfoData,
     },
   };
 };
